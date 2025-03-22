@@ -44,7 +44,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: #ff4444;
-            font-size: 36px;
+            font-size: 60px;
             font-weight: bold;
             text-align: center;
             z-index: 10000;
@@ -54,10 +54,10 @@
     </style>
 </head>
 <body>
-    <button id="bait-button">Голая Хахари!!</button>
+    <button id="bait-button">Голая Хахари)</button>
     <div id="countdown"></div>
     <img id="hahari-gif" src="hahari-face.gif" alt="Хахари GIF">
-    <div id="protection-text">Чужак! Это только для Рентаро!</div>
+    <div id="protection-text">ЧУЖАК! Это только для Рентаро!</div>
     <audio id="countdown-tick">
         <source src="countdown-tick.mp3" type="audio/mpeg">
     </audio>
@@ -75,6 +75,7 @@
 
         tickAudio.volume = 0.3;
         screamAudio.volume = 1.0;
+        screamAudio.loop = true;
 
         baitButton.addEventListener('click', () => {
             baitButton.style.display = 'none';
@@ -82,6 +83,8 @@
 
             let count = 3;
             countdownDiv.textContent = count;
+            tickAudio.currentTime = 0;
+            tickAudio.play();
 
             const countdown = setInterval(() => {
                 count--;
