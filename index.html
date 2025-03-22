@@ -2,13 +2,31 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Я вублю тебя Рентаро!</title>
+    <title>Для Рентаро;)</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
             background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #bait-button {
+            color: white;
+            font-size: 24px;
+            padding: 10px 20px;
+            background: #ff4444;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #countdown {
+            color: white;
+            font-size: 48px;
+            display: none;
         }
         #hahari-gif {
             position: fixed;
@@ -18,21 +36,68 @@
             height: 100vh;
             object-fit: cover;
             z-index: 9999;
+            display: none;
+        }
+        #protection-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ff4444;
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 10000;
+            display: none;
+            text-shadow: 2px 2px 4px #000;
         }
     </style>
 </head>
 <body>
+    <button id="bait-button">Голая Хахари, бесплатно!</button>
+    <div id="countdown"></div>
     <img id="hahari-gif" src="hahari-face.gif" alt="Хахари GIF">
-    <audio id="ending-chorus" autoplay>
+    <div id="protection-text">Чужак! Это только для Рентаро!</div>
+    <audio id="countdown-tick">
+        <source src="countdown-tick.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="ending-chorus">
         <source src="hahari-ending-chorus.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        const audio = document.getElementById('ending-chorus');
-        audio.volume = 1.0;
-        audio.play();
+        const baitButton = document.getElementById('bait-button');
+        const countdownDiv = document.getElementById('countdown');
+        const gif = document.getElementById('hahari-gif');
+        const protectionText = document.getElementById('protection-text');
+        const tickAudio = document.getElementById('countdown-tick');
+        const screamAudio = document.getElementById('ending-chorus');
 
-        audio.loop = true;
+        tickAudio.volume = 0.3;
+        screamAudio.volume = 1.0;
+
+        baitButton.addEventListener('click', () => {
+            baitButton.style.display = 'none';
+            countdownDiv.style.display = 'block';
+
+            let count = 3;
+            countdownDiv.textContent = count;
+
+            const countdown = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownDiv.textContent = count;
+                    tickAudio.currentTime = 0;
+                    tickAudio.play();
+                } else {
+                    clearInterval(countdown);
+                    countdownDiv.style.display = 'none';
+                    gif.style.display = 'block';
+                    protectionText.style.display = 'block';
+                    screamAudio.play();
+                }
+            }, 1000);
+        });
     </script>
 </body>
 </html>
